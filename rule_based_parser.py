@@ -18,8 +18,8 @@ def main():
     for file_path, file_content in collected.items():
         print('parsing file: ', file_path)
 
-        parser = ResumeParser()
-        parser.parse(file_content)
+        parser = ResumeParser(file_content)
+        parser.parse()
 
         if parser.unknown is False:
             print(parser.summary())
