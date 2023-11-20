@@ -46,9 +46,9 @@ def sort_and_move(file_path, file_content, passed_nlp, passed_skill_extractor, p
         else:
             destination_folder = destination_folder_0
 
-        # If sorting took longer than 30 seconds, move the file to 'sorted_folder_0'
-        if elapsed_time > 30:
-            print(f"Sorting took longer than 30 seconds for file: {file_path}")
+        # If sorting took longer than 60 seconds, move the file to 'sorted_folder_0'
+        if elapsed_time > 60:
+            print(f"Sorting took longer than 60 seconds for file: {file_path}")
             destination_folder = destination_folder_0
 
         # Construct the new file path in the destination folder
@@ -88,18 +88,18 @@ def main():
         sort_thread = threading.Thread(target=sort_and_move, args=(
             file_path, file_content, nlp, skill_extractor, soft_skill_keywords, sorted_folder_1, sorted_folder_0))
         sort_thread.start()
-        sort_thread.join(timeout=30)  # Wait for the thread to finish or timeout
+        sort_thread.join(timeout=60)  # Wait for the thread to finish or timeout
 
-        # If the thread is still alive, it means sorting took longer than 30 seconds
+        # If the thread is still alive, it means sorting took longer than 60 seconds
         if sort_thread.is_alive():
-            print(f"Sorting took longer than 30 seconds for file: {file_path}")
+            print(f"Sorting took longer than 60 seconds for file: {file_path}")
             destination_folder = sorted_folder_0  # Move the file to folder 0 in case of timeout
 
             # Construct the new file path in the destination folder
             new_file_path = os.path.join(destination_folder, os.path.basename(file_path))
 
             # Move the file to the destination folder
-            shutil.copy(file_path, new_file_path)
+            shutil.move(file_path, new_file_path)
 
         print('++++++++++++++++++++++++++++++++++++++++++')
 
