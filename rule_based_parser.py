@@ -1,8 +1,8 @@
 import sys
 import os
 
-from lib.parser import ResumeParser
-from lib.utils.read_files import read_pdf_and_docx
+from models.parser import ResumeParser
+from models.utils.read_files import read_pdf_and_docx
 
 
 def main():

@@ -6,7 +6,7 @@ from nltk import sent_tokenize
 from constants.soft_skills import soft_skill_keywords
 
 # Load the English language model
-from lib.parser_methods import extract_skills
+from models.parser_methods import extract_skills
 
 from spellchecker import SpellChecker
 
@@ -16,7 +16,7 @@ import Levenshtein as lev
 
 from dateutil import parser
 
-from lib.utils.read_files import extract_text_from_doc, extract_text_from_pdf
+from models.utils.read_files import extract_text_from_doc, extract_text_from_pdf
 
 nlp = spacy.load('en_core_web_md')
 

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 
-from lib.utils.read_files import read_pdf_and_docx
+from models.utils.read_files import read_pdf_and_docx
 
 current_dir = os.path.dirname(__file__)
 current_dir = current_dir if current_dir != '' else '.'

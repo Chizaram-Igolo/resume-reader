@@ -1,4 +1,4 @@
-from lib.parser_methods import extract_name, extract_email, extract_phone_number, extract_skills, extract_education
+from models.parser_methods import extract_name, extract_email, extract_phone_number, extract_skills, extract_education
 
 
 class ResumeParser(object):

@@ -15,8 +15,8 @@ from skillNer.general_params import SKILL_DB
 # import skill extractor
 from skillNer.skill_extractor_class import SkillExtractor
 
-from lib.sorter import ResumeSorter
-from lib.utils.read_files import read_pdf_and_docx
+from models.sorter import ResumeSorter
+from models.utils.read_files import read_pdf_and_docx
 from constants.soft_skills import soft_skill_keywords
 
 nlp = spacy.load('en_core_web_md')
