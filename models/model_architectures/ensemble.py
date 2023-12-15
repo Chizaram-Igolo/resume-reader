@@ -1,82 +1,51 @@
-from keras.models import Sequential, Model
-from keras.layers import Embedding, Bidirectional, LSTM, Conv1D, GlobalMaxPooling1D, GlobalAveragePooling1D, Dense, \
-    Input, Average
-import tf2crf
+from keras.models import Model, load_model
+from keras.layers import Dense, Concatenate, ZeroPadding1D
 
+from bi_lstm import padded_train_sequences as train_data_bi_lstm, train_labels
+from cnn import padded_train_sequences as train_data_cnn
 
-# Define the Bi-LSTM Model
-def create_bilstm_model(input_dim, output_dim):
-    model = Sequential([
-        Embedding(input_dim=input_dim, output_dim=64, input_length=input_length),
-        Bidirectional(LSTM(128, return_sequences=True)),
-        Dense(output_dim, activation='softmax')
-    ])
-    return model
-
-
-# Define the CNN Model
-def create_cnn_model(input_dim, output_dim):
-    model = Sequential([
-        Embedding(input_dim=input_dim, output_dim=64, input_length=input_length),
-        Conv1D(128, 5, activation='relu'),
-        GlobalMaxPooling1D(),
-        Dense(output_dim, activation='softmax')
-    ])
-    return model
-
-
-# Define the CRF Model
-def create_crf_model(input_dim, output_dim):
-    input_layer = Input(shape=(None,))  # Variable sequence length
-    embedding_layer = Embedding(input_dim, 64)(input_layer)
-    lstm_layer = Bidirectional(LSTM(128, return_sequences=True))(embedding_layer)
-    crf_layer = tf2crf.CRF(output_dim)(lstm_layer)
-
-    model = Model(inputs=input_layer, outputs=crf_layer)
-    return model
+bi_model = load_model("saved_models/bi_lstm_model.keras")
+c_model = load_model("saved_models/cnn_model.keras")
 
 
 # Create the ensemble by combining individual models
 def create_ensemble(models):
-    inputs = [model.input for model in models]
-    outputs = [model.output for model in models]
+    bi_lstm_model = models[0]
+    cnn_model = models[1]
 
-    # Add a Dense layer to each output before applying GlobalAveragePooling1D
-    dense_outputs = [Dense(64, activation='relu')(output) for output in outputs]
+    input_shape = cnn_model.layers[1].output.shape
+    desired_shape = bi_lstm_model.layers[1].output.shape
 
-    # Use GlobalAveragePooling1D to ensure consistent shapes before averaging
-    pooled_outputs = [GlobalAveragePooling1D()(output) for output in dense_outputs]
+    # Pad the tensor to the desired shape
+    padding_size = desired_shape[1] - input_shape[1] - 1
+    padded_cnn_output = ZeroPadding1D(padding=padding_size)(cnn_model.layers[1].output)
 
-    # Use tf.keras.layers.Average to average the pooled predictions
-    averaged = Average()(pooled_outputs)
-    ensemble_model = Model(inputs=inputs, outputs=averaged)
-    return ensemble_model
+    # Remove the output layer of each model
+    models_no_output = [Model(bi_lstm_model.input, bi_lstm_model.layers[1].output),
+                        Model(cnn_model.input, padded_cnn_output)]
 
+    # Concatenate the outputs of the models
+    concatenated = Concatenate()([model.output for model in models_no_output])
 
-# Set your input and output dimensions and input_length
-input_dim = 10000  # Example vocabulary size
-output_dim = 10  # Number of output classes
-input_length = 100  # Maximum input sequence length
+    # Add a dense layer for classification
+    dense = Dense(1, activation='sigmoid')(concatenated)
 
-# Create individual models
-bilstm_model = create_bilstm_model(input_dim, output_dim)
-cnn_model = create_cnn_model(input_dim, output_dim)
-crf_model = create_crf_model(input_dim, output_dim)
+    # Create the ensemble model
+    model = Model(inputs=[model.input for model in models], outputs=dense)
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-# Compile the individual models
-bilstm_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-cnn_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-crf_model.compile(optimizer='adam')
+    return model
+
 
 # Combine the models into an ensemble
-ensemble_models = [bilstm_model, cnn_model, crf_model]
-ensemble_model = create_ensemble(ensemble_models)
+ensemble_model = create_ensemble([bi_model, c_model])
 
-# Compile the ensemble model
-ensemble_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+# Train the ensemble model
+ensemble_model.fit(
+    x=[train_data_bi_lstm, train_data_cnn],
+    y=train_labels,
+    epochs=10,  # Adjust the number of epochs
+    batch_size=64  # Adjust the batch size
+)
 
-# Train each individual model and the ensemble model on your dataset
-# You will need to prepare your data and labels accordingly
-
-# Finally, evaluate the ensemble model on your test data
-# ensemble_model.evaluate(test_data, test_labels)
+ensemble_model.save("saved_models/ensemble_model.keras")

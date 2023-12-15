@@ -21,7 +21,7 @@ num_filters = 128  # Number of filters in each convolutional layer
 
 def build_cnn_model():
     cnn_model = Sequential([
-        Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_sequence_length),
+        Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_sequence_length, name='cnn'),
         Conv1D(filters=num_filters, kernel_size=filter_sizes[0], activation='relu'),
         GlobalMaxPooling1D(),
         Dense(1, activation='sigmoid')  # Adjust the number of units based on your task
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # Train the model
     model.fit(padded_train_sequences, train_labels, epochs=10, batch_size=64)
-    model.save("saved_models/cnn_model.h5")
+    model.save("saved_models/cnn_model.keras")
 
     # Ensure labels are reshaped to match the output shape of the model
     test_labels = np.expand_dims(test_labels, axis=-1)

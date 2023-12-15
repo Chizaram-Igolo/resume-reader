@@ -27,8 +27,8 @@ if __name__ == "__main__":
     model = build_bi_lstm_model()
 
     # Train the model
-    model.fit(padded_train_sequences, train_labels, epochs=8, batch_size=1)
-    model.save("saved_models/bi_lstm_model.h5")
+    model.fit(padded_train_sequences, train_labels, epochs=10, batch_size=1)
+    model.save("saved_models/bi_lstm_model.keras")
 
     # Ensure labels are reshaped to match the output shape of the model
     test_labels = np.expand_dims(test_labels, axis=-1)
