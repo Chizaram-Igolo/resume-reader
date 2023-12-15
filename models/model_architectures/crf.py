@@ -2,7 +2,7 @@ import joblib
 from sklearn_crfsuite import CRF
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import MultiLabelBinarizer
-from sklearn.metrics import f1_score, hamming_loss, jaccard_score
+from sklearn.metrics import f1_score, hamming_loss, jaccard_score, accuracy_score, log_loss
 from sklearn.preprocessing import MultiLabelBinarizer
 
 from prepare_model_input import prepare_crf_input
@@ -48,6 +48,13 @@ if __name__ == "__main__":
     # Convert predictions and true labels to binary format
     # y_test_binary = mlb.transform(y_test)
     # y_pred_binary = mlb.transform(y_pred)
+
+    accuracy_crf = accuracy_score(y_test_binary, y_pred_binary)
+
+    loss_crf = log_loss(y_test_binary, y_pred_binary)
+
+    print(f'CRF Accuracy: {accuracy_crf:.4f}')
+    print(f'CRF Loss: {loss_crf:.4f}')
 
     # Compute the micro-averaged F1 score
     micro_f1 = f1_score(y_test_binary, y_pred_binary, average='micro')
