@@ -7,7 +7,7 @@ from keras.preprocessing.text import Tokenizer
 
 def prepare_bilstm_input():
     # Load data from CSV into a DataFrame, discarding rows with NaN values
-    csv_file_path = './training_data.csv'  # Replace with the actual path to your CSV file
+    csv_file_path = './resume_data.csv'  # Replace with the actual path to your CSV file
     df = pd.read_csv(csv_file_path).dropna(subset=['train_label'])
 
     # Convert 'train_label' to numeric, discard rows with non-numeric values
@@ -44,7 +44,7 @@ def prepare_bilstm_input():
 
 def prepare_cnn_input():
     # Load data from CSV into a DataFrame, discarding rows with NaN values
-    csv_file_path = './training_data.csv'  # Replace with the actual path to your CSV file
+    csv_file_path = './resume_data.csv'  # Replace with the actual path to your CSV file
     df = pd.read_csv(csv_file_path).dropna(subset=['train_label'])
 
     # Convert 'train_label' to numeric, discard rows with non-numeric values
@@ -81,7 +81,7 @@ def prepare_cnn_input():
 
 def prepare_crf_input():
     # Load data from CSV into a DataFrame, discarding rows with NaN values
-    csv_file_path = './training_data.csv'  # Replace with the actual path to your CSV file
+    csv_file_path = './resume_data.csv'  # Replace with the actual path to your CSV file
     df = pd.read_csv(csv_file_path).dropna(subset=['train_label'])
 
     # Convert 'train_label' to numeric, discard rows with non-numeric values

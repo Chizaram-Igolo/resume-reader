@@ -15,8 +15,14 @@ from skillNer.skill_extractor_class import SkillExtractor
 
 from docx import Document
 
-# load pre-trained model
-nlp = spacy.load('en_core_web_md')
+
+# Check if en_core_web_md is installed
+if not spacy.util.is_package("en_core_web_md"):
+    # Install the package if it's not installed
+    spacy.cli.download("en_core_web_md")
+
+# Load the model
+nlp = spacy.load("en_core_web_md")
 
 # Initialize skill extractor
 skill_extractor = SkillExtractor(nlp, SKILL_DB, PhraseMatcher)
