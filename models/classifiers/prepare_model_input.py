@@ -8,22 +8,22 @@ from keras.preprocessing.text import Tokenizer
 def prepare_bilstm_input():
     # Load data from CSV into a DataFrame, discarding rows with NaN values
     csv_file_path = './resume_data.csv'  # Replace with the actual path to your CSV file
-    df = pd.read_csv(csv_file_path).dropna(subset=['train_label'])
+    df = pd.read_csv(csv_file_path).dropna(subset=['label'])
 
-    # Convert 'train_label' to numeric, discard rows with non-numeric values
-    df['train_label'] = pd.to_numeric(df['train_label'], errors='coerce')
-    df = df.dropna(subset=['train_label'])
+    # Convert 'label' to numeric, discard rows with non-numeric values
+    df['label'] = pd.to_numeric(df['label'], errors='coerce')
+    df = df.dropna(subset=['label'])
 
-    # Filter rows where 'train_label' contains only '0' or '1'
-    df = df[df['train_label'].isin([0, 1])]
+    # Filter rows where 'label' contains only '0' or '1'
+    df = df[df['label'].isin([0, 1])]
 
     # Shuffle the DataFrame
     df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
     # Split the data into training and test sets
     train_data, test_data, train_labels, test_labels = train_test_split(
-        df['resume_text'],
-        df['train_label'].astype(int),  # Ensure labels are of integer type
+        df['text'],
+        df['label'].astype(int),  # Ensure labels are of integer type
         test_size=0.2,
         random_state=42
     )
@@ -45,22 +45,22 @@ def prepare_bilstm_input():
 def prepare_cnn_input():
     # Load data from CSV into a DataFrame, discarding rows with NaN values
     csv_file_path = './resume_data.csv'  # Replace with the actual path to your CSV file
-    df = pd.read_csv(csv_file_path).dropna(subset=['train_label'])
+    df = pd.read_csv(csv_file_path).dropna(subset=['label'])
 
-    # Convert 'train_label' to numeric, discard rows with non-numeric values
-    df['train_label'] = pd.to_numeric(df['train_label'], errors='coerce')
-    df = df.dropna(subset=['train_label'])
+    # Convert 'label' to numeric, discard rows with non-numeric values
+    df['label'] = pd.to_numeric(df['label'], errors='coerce')
+    df = df.dropna(subset=['label'])
 
-    # Filter rows where 'train_label' contains only '0' or '1'
-    df = df[df['train_label'].isin([0, 1])]
+    # Filter rows where 'label' contains only '0' or '1'
+    df = df[df['label'].isin([0, 1])]
 
     # Shuffle the DataFrame
     df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
     # Split the data into training and test sets
     train_data, test_data, train_labels, test_labels = train_test_split(
-        df['resume_text'],
-        df['train_label'].astype(int),  # Ensure labels are of integer type
+        df['text'],
+        df['label'].astype(int),  # Ensure labels are of integer type
         test_size=0.2,
         random_state=42
     )
@@ -82,22 +82,22 @@ def prepare_cnn_input():
 def prepare_crf_input():
     # Load data from CSV into a DataFrame, discarding rows with NaN values
     csv_file_path = './resume_data.csv'  # Replace with the actual path to your CSV file
-    df = pd.read_csv(csv_file_path).dropna(subset=['train_label'])
+    df = pd.read_csv(csv_file_path).dropna(subset=['label'])
 
-    # Convert 'train_label' to numeric, discard rows with non-numeric values
-    df['train_label'] = pd.to_numeric(df['train_label'], errors='coerce')
-    df = df.dropna(subset=['train_label'])
+    # Convert 'label' to numeric, discard rows with non-numeric values
+    df['label'] = pd.to_numeric(df['label'], errors='coerce')
+    df = df.dropna(subset=['label'])
 
-    # Filter rows where 'train_label' contains only '0' or '1'
-    df = df[df['train_label'].isin([0, 1])]
+    # Filter rows where 'label' contains only '0' or '1'
+    df = df[df['label'].isin([0, 1])]
 
     # Shuffle the DataFrame
     df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
     # Split the data into training and test sets
     train_data, test_data, train_labels, test_labels = train_test_split(
-        df['resume_text'],
-        df['train_label'].astype(int),  # Ensure labels are of integer type
+        df['text'],
+        df['label'].astype(int),  # Ensure labels are of integer type
         test_size=0.2,
         random_state=42
     )

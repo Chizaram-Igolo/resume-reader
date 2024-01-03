@@ -6,7 +6,6 @@ from utilities.read_files import extract_text_from_pdf, extract_text_from_doc
 
 # Directory path where resume files are stored
 
-
 # List to store data for DataFrame
 data = {'text': [], 'label': []}
 
@@ -34,7 +33,7 @@ for root, dirs, files in os.walk(data_dir_path):
         elif file_extension.lower() == '.docx':
             text = extract_text_from_doc(file_path)[0]
 
-        text = text.strip()
+        text.replace('\n', ' ').strip()
 
         if text == "":
             continue
@@ -46,8 +45,8 @@ for root, dirs, files in os.walk(data_dir_path):
         data['text'].append(text)
         data['label'].append(label)
 
-# Create DataFrame
-df = pd.DataFrame(data)
+# Create DataFrame with explicitly defined column order
+df = pd.DataFrame(data, columns=['text', 'label'])
 
 # Save DataFrame to CSV
-df.to_csv('./classifiers/resume_data.csv', index=False)
+df.to_csv('./classifiers/resume_data.csv', index=False, escapechar='\\')

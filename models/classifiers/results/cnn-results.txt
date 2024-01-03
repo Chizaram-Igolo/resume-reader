@@ -1,0 +1,26 @@
+Epoch 1/10
+WARNING:tensorflow:From C:\Users\HP\Desktop\resume-reader\venv\lib\site-packages\keras\src\utils\tf_utils.py:492: The name tf.ragged.RaggedTensorValue is deprecated. Please use tf.compat.v1.ragged.RaggedTensorValue instead.
+
+WARNING:tensorflow:From C:\Users\HP\Desktop\resume-reader\venv\lib\site-packages\keras\src\engine\base_layer_utils.py:384: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+26/26 [==============================] - 72s 1s/step - loss: 0.6577 - accuracy: 0.8155
+Epoch 2/10
+26/26 [==============================] - 36s 1s/step - loss: 0.5217 - accuracy: 0.8788
+Epoch 3/10
+26/26 [==============================] - 37s 1s/step - loss: 0.3709 - accuracy: 0.8752
+Epoch 4/10
+26/26 [==============================] - 38s 1s/step - loss: 0.2888 - accuracy: 0.8922
+Epoch 5/10
+26/26 [==============================] - 34s 1s/step - loss: 0.2284 - accuracy: 0.9147
+Epoch 6/10
+26/26 [==============================] - 34s 1s/step - loss: 0.1784 - accuracy: 0.9452
+Epoch 7/10
+26/26 [==============================] - 35s 1s/step - loss: 0.1337 - accuracy: 0.9629
+Epoch 8/10
+26/26 [==============================] - 38s 1s/step - loss: 0.0983 - accuracy: 0.9762
+Epoch 9/10
+26/26 [==============================] - 37s 1s/step - loss: 0.0684 - accuracy: 0.9890
+Epoch 10/10
+26/26 [==============================] - 37s 1s/step - loss: 0.0490 - accuracy: 0.9927
+13/13 [==============================] - 16s 58ms/step - loss: 0.2905 - accuracy: 0.8929
+Test Loss: 0.2905, Test Accuracy: 0.8929

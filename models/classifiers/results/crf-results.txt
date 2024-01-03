@@ -1,0 +1,5 @@
+CRF Accuracy: 0.6792
+CRF Loss: 16.0636
+Micro-Averaged F1 Score: 0.8819232677020761
+Hamming Loss: 0.10120862768393481
+Jaccard Similarity Score: 0.8295677481881889
