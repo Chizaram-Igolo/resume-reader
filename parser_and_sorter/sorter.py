@@ -19,6 +19,11 @@ from utilities.read_files import read_pdf_and_docx
 from utilities.soft_skills import soft_skill_keywords
 from utilities.constants import resume_folder_path, sorted_folder_path
 
+# Check if en_core_web_md is installed
+if not spacy.util.is_package("en_core_web_md"):
+    # Install the package if it's not installed
+    spacy.cli.download("en_core_web_md")
+
 nlp = spacy.load('en_core_web_md')
 
 # Initialize skill extractor
