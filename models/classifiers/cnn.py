@@ -3,11 +3,11 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
 from keras.layers import Embedding, Conv1D, GlobalMaxPooling1D, Dense
 
-from prepare_model_input import prepare_cnn_input
+from prepare_model_input import prepare_bilstm_cnn_input
 
 # Retrieve training data
 train_data, test_data, train_labels, test_labels, tokenizer, vocab_size, train_sequences, max_sequence_length, \
-    padded_train_sequences = prepare_cnn_input()
+    padded_train_sequences = prepare_bilstm_cnn_input('./resume_data.csv')
 
 # Prepare testing data
 test_sequences = tokenizer.texts_to_sequences(test_data)

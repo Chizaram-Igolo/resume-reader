@@ -3,11 +3,11 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
 from keras.layers import Embedding, Bidirectional, LSTM, Dense
 
-from prepare_model_input import prepare_bilstm_input
+from prepare_model_input import prepare_bilstm_cnn_input
 
 # Retrieve training data and labels and testing data and labels
 train_data, test_data, train_labels, test_labels, tokenizer, vocab_size, train_sequences, max_sequence_length, \
-    padded_train_sequences = prepare_bilstm_input()
+    padded_train_sequences = prepare_bilstm_cnn_input('./resume_data.csv')
 
 test_sequences = tokenizer.texts_to_sequences(test_data)
 padded_test_sequences = pad_sequences(test_sequences, maxlen=max_sequence_length, padding='post')
